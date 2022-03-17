@@ -1,0 +1,24 @@
+/*SKIP NAVI*/
+#skipNavi li { font-size:0; line-height:0; z-index:99999999999;}
+#skipNavi li a { display:block; width:100%; padding:10px 0; color:#fff; position:absolute; left:0; top:-100px; text-align:center; z-index:200; background:#413022; border:0 none; z-index:99999999999;}
+#skipNavi li a:active, #skipNavi li a:focus { top:0; font-weight:bold;font-size:16px;line-height:1.5; border-bottom:1px solid #fff; z-index:99999999999;}
+
+/*데스크탑*/
+@media screen and (min-width:1200px) {
+	.d-hide{display:none !important;}
+}
+
+/*태블릿 & 모바일*/
+@media screen and (max-width: 1199px){
+	.tm-hide{display:none !important;}		
+}
+
+/*태블릿*/
+@media screen and (max-width: 1199px) and (min-width: 768px) {
+	.t-hide{display:none !important;}
+}
+
+/* 모바일  */
+@media screen and (max-width: 767px) {
+	.m-hide{display:none !important;}
+}

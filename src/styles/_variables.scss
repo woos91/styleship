@@ -1,0 +1,31 @@
+/* variables */
+
+$desktop: 1200px;
+$tablet: 1199px;
+$mobile: 767px;
+
+/* //variables */
+
+
+/* extend */
+
+.ff-heve-blk-wt {
+    font-family: 'HelveticaNeueLTStd-Blk', 'Noto Sans Korean', sans-serif;
+    font-weight: 400;
+    color: rgb(255, 255, 255);
+}
+
+.ff-ita-bk {
+    font-family: 'Italiana', 'Noto Sans Korean', serif;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+}
+
+.ff-ita-wt {
+    font-family: 'Italiana', 'Noto Sans Korean', serif;
+    font-weight: 400;
+    color: rgb(255, 255, 255);
+}
+
+
+/* //extend */
