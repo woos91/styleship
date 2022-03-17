@@ -7,6 +7,8 @@ module.exports = defineConfig({
                 additionalData: `
         @import "@/assets/sass/_variables.scss";
         @import "@/assets/sass/_mixin.scss";
+        @import "@/assets/sass/_opt-default.scss";
+        @import "@/assets/sass/_normalize.scss";
       `
             }
         }

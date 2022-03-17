@@ -139,9 +139,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import './styles/_variables.scss';
-@import './assets/css/normalize.css';
-@import './assets/css/opt-default.css';
+// @import './styles/_variables.scss';
+//@import './assets/css/normalize.css';
+//@import './assets/css/opt-default.css';
 
 
 /* header */
