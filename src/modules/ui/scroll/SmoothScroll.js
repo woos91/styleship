@@ -104,7 +104,7 @@ class SmoothScroll {
         window.requestAnimationFrame((timestamp)=>{jm.#moving(timestamp)});     //  스크롤처리 enterframe 시작
     }
     #refreshScrollBar(visible) {
-        
+        visible;
     }
     #getHeight(dom){    // 높이값 읽기. <html>,<body>와 일반적인 HTMLElement들의 높이 읽기 방법이 다름.
         if (dom.constructor.name === "HTMLHtmlElement") return window.innerHeight;
@@ -117,5 +117,5 @@ class SmoothScroll {
         else return 0;
     }
 }
-let smoothScroll = new SmoothScroll();
-// export default SmoothScroll;
+// let smoothScroll = new SmoothScroll();
+export default SmoothScroll;
