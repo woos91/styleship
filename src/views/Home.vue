@@ -4,7 +4,7 @@
       <h2 class="hidden">banner</h2>
 
       <ul>
-          <Thumb v-for="(tl, i) in thumbA" :key="tl" :liData="thumbA[i]"/>         
+          <Thumb v-for="(tl, i) in loadData.referenceA" :key="tl" :liData="loadData.referenceA[i]"/>         
       </ul>          
     </section>
 
@@ -12,7 +12,7 @@
       <h2 class="hidden">banner</h2>
       
       <ul>
-          <Thumb v-for="(tl, i) in thumbB" :key="tl" :liData="thumbB[i]"/>
+          <Thumb v-for="(tl, i) in loadData.referenceB" :key="tl" :liData="loadData.referenceB[i]"/>
       </ul>
     </section>
 
@@ -20,7 +20,7 @@
       <h2 class="hidden">banner</h2>
       
       <ul>
-          <Thumb v-for="(tl, i) in thumbC" :key="tl" :liData="thumbC[i]"/>
+          <Thumb v-for="(tl, i) in loadData.referenceC" :key="tl" :liData="loadData.referenceC[i]"/>
       </ul>
     </section>
 
@@ -28,32 +28,52 @@
       <h2 class="hidden">banner</h2>
       
       <ul>          
-          <Thumb v-for="(tl, i) in thumbD" :key="tl" :liData="thumbD[i]"/>
+          <Thumb v-for="(tl, i) in loadData.referenceD" :key="tl" :liData="loadData.referenceD[i]"/>
       </ul>
     </section>
   </div>
 </template>
 
 <script>
-import ThumbDataA from '@/data/thumbData_2';
-import ThumbDataB from '@/data/thumbData_3';
-import ThumbDataC from '@/data/thumbData_4';
-import ThumbDataD from '@/data/thumbData';
+import {computed, reactive, onMounted} from 'vue'
+import api from '@/modules/api'
 import ThumbList from '@/components/reference/Thumb.vue';
 
 export default {
-    name: 'Reference-1',
-    data() {
-        return {
-            thumbA : ThumbDataA,
-            thumbB : ThumbDataB,
-            thumbC : ThumbDataC,
-            thumbD : ThumbDataD,
-        }
-    },
+    name: 'MainPage',
     components: {
         Thumb : ThumbList
+    },
+    setup () {
+      const loadData = computed(()=>state.apiData);
+      const state = reactive({
+        apiData: {}
+      })
+    
+      let loadAPI = ()=>{
+        api.request({
+          type:"HOME_DATA",
+          success: loadComplete,
+          error: loadError,
+        });
+      }
+      const loadComplete = (data) =>{
+        state.apiData = data;
+      }
+      const loadError = (e) =>{
+        console.error(e);
+      }
+
+      onMounted (()=>{
+        loadAPI();
+      })
+
+      return {
+        loadData,
+        state, 
+      }
     }
+    
 }
 </script>
 
