@@ -1,10 +1,11 @@
 "use strict";
 
-import memberID from './auth'
+import Auth from './auth'
 import getToken from './auth/getToken'
 import refresh from './auth/refresh'
 import apiMap from './apiMap'
 import session from './auth/session'
+import axios from 'axios'
 
 class API {
     #reqBuffer = []; // 순차로딩을 위한 읽기 요청 리스트
@@ -14,7 +15,7 @@ class API {
     request(apiType, args) {
         let jm=this, 
             _cfg;   // 요청된 리퀘스트의 설정들이 저장될 값
-        if (arguments.length ==1) return;   // 요청 인수 값이 없다면 실행 중지.
+        if (arguments.length < 1) return;   // 요청 인수 값이 없다면 실행 중지.
         if (typeof apiType == "string") {   //  첫번째 arguments값이 문자일 경우
             _cfg = args||{};    //  두번째 arguments값이 있으면 기본 사용, 아니면 새 오브젝트
             _cfg.type = apiType;    //  요청 타입 설정
@@ -38,7 +39,6 @@ class API {
             }
             if (tempData !== undefined) _cfg.config.params = tempData;  //  만들어진 object값으로 요청data(params) 교체
         }
-
         /******************************** 세션 데이터 사용 여부에 따른 처리 부분 - 여기서부터 */
         if (!apiMap.SESSION_ID) {       // API에서 'SESSION_ID' type을 사용 않는 경우
             jm.#buildRequest(_cfg);
@@ -89,7 +89,7 @@ class API {
             _useAuth=apiMap[cfg.type].useAuth,  //  해당 API요청이 인증 토큰이 필요한 매서드일 경우인지 여부 값
             _useHeaders = apiMap[cfg.type].headers||null,  //  해당 요청의 apiMap에 별도의 headers(요청헤더)값이 정의되어있다면 이를 사용함
             access = getToken();    //  인증토큰 값 구하기
-            jm.memberID = memberID;
+            jm.#memberID = new Auth().memberID;
 
         /******************************** 인증토큰 사용 여부에 따른 처리 부분 - 여기서부터 */
         if (access == "REQUIRE_REFRESH") {  //  만약 인증토큰이 만료된 상태라면...
@@ -139,7 +139,7 @@ class API {
         let jm = this, 
             etcCfg = null;  //  이번 타임의 요청 헤더 등의 처리를 위한 기타 설정 정보 오브젝트
         if (jm.#reqBuffer.length == 0) return;   // 만약 더이상 요청할 API가 버퍼목록에 없다면 그냥 종료
-        let buffer = this.reqBuffer[0],     //  이번 타임의 요청할 API
+        let buffer = jm.#reqBuffer[0],     //  이번 타임의 요청할 API
             success = buffer.success,      //  이번 타임의 요청 완료시 실행될 매서드
             error = buffer.error,     //  이번 타임의 요청 실패시 실행될 매서드
             frm;    //  이번 타임 요청에 사용될지 모를 폼데이터 값 준비
@@ -163,23 +163,24 @@ class API {
                 delete(buffer.config.headers);   //  요청에  사용될 위치로 헤더의 정의가 끝났으므로 buffer.config.headers의 값 없애기
             }
         }
-        
-        jm.axios[buffer.method](buffer.url, buffer.config, etcCfg)  //  main.js에서 axios의 vue전역설정을 마쳤으므로 이렇게 사용. 그게 아니라면 axios 임포트 후 사용해야함.
+        axios[buffer.method](buffer.url, buffer.config, etcCfg)  //  main.js에서 axios의 vue전역설정을 마쳤으므로 이렇게 사용. 그게 아니라면 axios 임포트 후 사용해야함.
             .then((res) =>{     //  요청 성공시
                 let value = (res.data === "true") ? true: (res.data === "false") ? false: res.data; //  리턴 값이 json이나 String이 아닌 Boolean값일 경우 true/false처리. 아니면 그대로.
                 if (res.data.message) console.log(res.data.message);    //  만약 메시지 값이 있다면 이를 콘솔로그... alert처리 해야한다면...이부분 alert로 변경
                 success.call(jm, value);    // 요청 성공시 실행해야할 매서드 실행.
+                error = ()=>{};
                 jm.#callNextBuffer.call(jm);     //  다음 버퍼의 요청 실행하기
             })
             .catch((res)=>{     // 요청 실패시
+                console.log("err", res);
                 error.call(jm, res);    // 요청 실패시 실행해야할 매서드 실행.
                 jm.#callNextBuffer.call(jm);     //  다음 버퍼의 요청 실행하기
             });
     }
     #callNextBuffer() {      //  다음 버퍼의 요청 실행하기
         let jm = this;
-        jm.reqBuffer.splice(0,1);     //  이전 실행된 요청의 버퍼 삭제하기.
-        jm.sendRequest.call(jm);     //  버퍼의 다음 요청 실행하기
+        jm.#reqBuffer.splice(0,1);     //  이전 실행된 요청의 버퍼 삭제하기.
+        jm.#sendRequest.call(jm);     //  버퍼의 다음 요청 실행하기
     }
 
     /******************************** 전송파라메터 데이터의 타입에 따른 값 제어 - 여기서부터 */
