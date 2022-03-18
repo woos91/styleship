@@ -54,14 +54,10 @@ export default {
         api.request({
           type:"HOME_DATA",
           success: loadComplete,
-          error: loadError,
         });
       }
       const loadComplete = (data) =>{
         state.apiData = data;
-      }
-      const loadError = (e) =>{
-        console.error(e);
       }
 
       onMounted (()=>{
