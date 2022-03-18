@@ -1,4 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
+
+process.env.VUE_APP_VERSION = require('./package.json').version
 module.exports = defineConfig({
     transpileDependencies: true,
     css: {
@@ -13,21 +15,6 @@ module.exports = defineConfig({
             }
         }
     },
-    publicPath: process.env.BASE_URL,             // 실제 서비스 될 루트 경로 설정 (env세팅에 따름 : '/styleship/')
-    outputDir: 'dist/styleship'              // 아웃풋($ yarn serveemd...)의 경로 설정 (env세팅에 따름 : '/styleship/')
+    publicPath: process.env.BASE_URL,             // 실제 서비스 될 루트 경로 설정
+    outputDir: 'dist/styleship' 
 });
-
-
-/*
-module.exports = {
-    css: {
-        loaderOptions: {
-            sass: {
-                additionalData: `
-    @import "@/assets/sass/_variables.scss";
-    @import "@/assets/sass/_mixin.scss";
-  `
-            }
-        }
-    }
-}*/
