@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Reference from '../views/reference/List.vue'
 
+
+
 const routes = [{
         path: '/',
         name: 'Home',

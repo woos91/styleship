@@ -121,20 +121,46 @@
 </template>
 
 <script>
+import {reactive, computed, onMounted} from 'vue'
+import SmoothScroll from '@/modules/ui/scroll/SmoothScroll'
 export default {
   name: 'App',
-  data: () => ({
-    navMode: false,
-    contactMode: false,
-  }),
-  methods: {
-    navOpen(){
-      this.navMode = !this.navMode;
-    },
-    contactOpen(){
-      this.contactMode = !this.contactMode;
+  setup () {
+    const state = reactive({
+      navMode:false,
+      contactMode: false,
+    })
+    const navMode = computed(()=>state.navMode);
+    const contactMode = computed(()=>state.contactMode);
+    const navOpen = ()=>{
+      state.navMode = !state.navMode;
+    };
+    const contactOpen = ()=>{
+      state.contactMode = !state.contactMode;
+    };
+    onMounted ( ()=>{
+      new SmoothScroll();
+    })
+    return { 
+      navMode,
+      contactMode,
+      navOpen,
+      contactOpen,
+      state
     }
   }
+  // data: () => ({
+  //   navMode: false,
+  //   contactMode: false,
+  // }),
+  // methods: {
+  //   navOpen(){
+      
+  //   },
+  //   contactOpen(){
+  //     this.contactMode = !this.contactMode;
+  //   }
+  // }
 }
 </script>
 
