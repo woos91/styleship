@@ -49,7 +49,7 @@
             </li>
 
             <li>
-              <a href="#">SERVICE</a>
+              <a href="#">SERVICE2</a>
             </li>
 
             <li>
