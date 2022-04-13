@@ -2,7 +2,7 @@
 <template>
   <div class="main-wrap">
     <section class="banner-box _type_full">
-      <h2 class="hidden">banner</h2>
+      <h2 class="hidden">bannerzzzzzzz</h2>
 
       <ul>
           <Thumb v-for="(tl, i) in loadData.referenceA" :key="tl" :liData="loadData.referenceA[i]"/>         
