@@ -45,7 +45,7 @@
       <div class="menu">
         <ul>
             <li>
-              <a href="#">COMPANY</a>
+              <a href="#">COMPANY1</a>
             </li>
 
             <li>
