@@ -12,7 +12,9 @@ module.exports = defineConfig({
       `
             }
         }
-    }
+    },
+    publicPath: process.env.BASE_URL, // 실제 서비스 될 루트 경로 설정
+    outputDir: 'dist/' + process.env.BASE_URL
 });
 
 

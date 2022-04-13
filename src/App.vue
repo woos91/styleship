@@ -104,7 +104,7 @@
 
 		<!-- start of :: contents -->
 		<div id="contents">
-      <router-view />
+      <router-view /> <!-- router/index.js 에서 각 링크 확인--->
 		</div>
 		<!-- // end of :: contents -->
 	
@@ -112,7 +112,7 @@
 		<footer id="footer" class="footer--fix">
 			<a href="#" class="download">BRIEF. DOWNLOAD</a>
 
-      <p class="copyright">2022. STYLESHIP.Co.ltd</p>
+      <p class="copyright">2022. STYLESHIP.Co.ltsdSSS</p>
 
       <button type="button" class="contact__btn" @click="contactOpen">contact</button>
 		</footer>
@@ -123,11 +123,12 @@
 <script>
 import {reactive, computed, onMounted} from 'vue'
 import SmoothScroll from '@/modules/ui/scroll/SmoothScroll'
+
 export default {
-  name: 'App',
-  setup () {
+  naem: 'App',
+  setup() {
     const state = reactive({
-      navMode:false,
+      navMode: false,
       contactMode: false,
     })
     const navMode = computed(()=>state.navMode);
@@ -138,10 +139,10 @@ export default {
     const contactOpen = ()=>{
       state.contactMode = !state.contactMode;
     };
-    onMounted ( ()=>{
+    onMounted( ()=>{
       new SmoothScroll();
     })
-    return { 
+    return {
       navMode,
       contactMode,
       navOpen,
@@ -149,19 +150,26 @@ export default {
       state
     }
   }
-  // data: () => ({
-  //   navMode: false,
-  //   contactMode: false,
-  // }),
-  // methods: {
-  //   navOpen(){
-      
-  //   },
-  //   contactOpen(){
-  //     this.contactMode = !this.contactMode;
-  //   }
-  // }
 }
+
+
+
+// export default {
+//     name: 'App',
+//     data: () => ({
+//       navMode: false,
+//       contactMode: false,
+//     }),
+//     methods: {
+//       navOpen(){
+//         this.navMode = !this.navMode;    
+//       },
+//       contactOpen(){
+//         this.contactMode = !this.contactMode;
+//       }
+//     }
+// }
+
 </script>
 
 <style lang="scss">

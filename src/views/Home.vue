@@ -1,3 +1,80 @@
+
+<template>
+  <div class="main-wrap">
+    <section class="banner-box _type_full">
+      <h2 class="hidden">banner</h2>
+
+      <ul>
+          <Thumb v-for="(tl, i) in loadData.referenceA" :key="tl" :liData="loadData.referenceA[i]"/>         
+      </ul>          
+    </section>
+
+    <section class="banner-box _type_thumb1_big">
+      <h2 class="hidden">banner</h2>
+      
+      <ul>
+          <Thumb v-for="(tl, i) in loadData.referenceB" :key="tl" :liData="loadData.referenceB[i]"/>
+      </ul>
+    </section>
+
+    <section class="banner-box _type_thumb1_small">
+      <h2 class="hidden">banner</h2>
+      
+      <ul>
+          <Thumb v-for="(tl, i) in loadData.referenceC" :key="tl" :liData="loadData.referenceC[i]"/>
+      </ul>
+    </section>
+
+    <section class="banner-box _type_thumb3">
+      <h2 class="hidden">banner</h2>
+      
+      <ul>          
+          <Thumb v-for="(tl, i) in loadData.referenceD" :key="tl" :liData="loadData.referenceD[i]"/>
+      </ul>
+    </section>
+  </div>
+</template>
+
+<script>
+import {computed, reactive, onMounted} from 'vue'
+import api from '@/modules/api'
+import ThumbList from '@/components/reference/Thumb.vue';
+export default {
+    name: 'MainPage',
+    components: {
+        Thumb : ThumbList
+    },
+    setup () {
+      const loadData = computed(()=>state.apiData);
+      const state = reactive({
+        apiData: {}
+      })
+    
+      let loadAPI = ()=>{
+         console.log(1);
+        api.request({
+          type:"HOME_DATA",
+          success: loadComplete,
+        });
+         console.log(2);
+      }
+      const loadComplete = (data) =>{
+        console.log(3);
+        state.apiData = data;
+      }
+      onMounted (()=>{
+        loadAPI();
+      })
+      return {
+        loadData,
+        state, 
+      }
+    }
+    
+}
+</script>
+
+<!--
 <template>
   <div class="main-wrap">
     <section class="banner-box _type_full">
@@ -56,7 +133,7 @@ export default {
     }
 }
 </script>
-
+-->
 
 <style lang="scss">
 //@import '@/styles/_variables.scss';
